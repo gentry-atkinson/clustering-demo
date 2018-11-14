@@ -6,15 +6,19 @@ xarray = list()
 yarray = list()
 
 inFile = open("real_data.json")
+
+line = inFile.readline()
+
 try:
     while (inFile):
         line = inFile.readline()
         item = json.loads(line)
-        xarray.append(item["X"])
-        yarray.append(item["Y"])
-        #print ("X=", item["X"], " Y=", item["Y"])
+        #if (float(item["Latitude"]) > 28):
+        xarray.append(float(item["X"]))
+        yarray.append(float(item["Y"]))
+        #print ("X=", item["Latitude"], " Y=", item["Longitude"])
 except:
     print ("bad value in file")
 
-plot.scatter(xarray, yarray, 100)
+plot.scatter(xarray, yarray, 5, "blue")
 plot.show()
