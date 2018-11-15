@@ -8,7 +8,6 @@ import numpy
 inFile = open("real_data.json")
 
 line = inFile.readline()
-line = inFile.readline()
 item = json.loads(line)
 
 X = numpy.array([float(item["X"]), float(item["Y"])])

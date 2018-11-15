@@ -5,6 +5,7 @@ import random
 import math
 import timer
 import json
+import matplotlib.pyplot as plot
 
 class kmeans(object):
 
@@ -177,13 +178,15 @@ if __name__ == '__main__':
     res = []
     #for row in csv.reader(sys.stdin):
         #res.append([float(x) for x in row])
-    inFile = open("real_data.json")
+    inFile = open("Real-Time_Traffic_Incident_Reports.json")
+    inFile.readline()
 
     try:
         while (inFile):
             line = inFile.readline()
             item = json.loads(line)
-            res.append([item["X"], item["Y"]])
+            if (float(item["Latitude"]) > 28):
+                res.append([float(item["Latitude"]), float(item["Longitude"])])
     except:
         print ("Bad value in file")
 
@@ -213,5 +216,20 @@ if __name__ == '__main__':
     #for x in k1.getErrors():
         #eWrtr.writerow(x)
 
-    for x in k1.getOutput():
-        print (x)
+    outPut = k1.getOutput()
+    x_array = []
+    y_array = []
+    clusters = []
+
+    color = {1 : "red", 2 : "green", 3 : "blue", 4: "black", 5 : "white", 0 : "yellow", 6: "purple", 7 : "orange", 8: "brown"}
+    counter = 1
+    for j in outPut:
+        x_array.append(float(j[0]))
+        y_array.append(float(j[1]))
+        clusters.append(color[int(j[2])])
+    plot.scatter(x_array, y_array, 10, clusters)
+    counter += 1
+    x_array = []
+    y_array = []
+    plot.title("DP Means on set 1")
+    plot.show()
